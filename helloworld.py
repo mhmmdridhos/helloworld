@@ -193,7 +193,6 @@ def mentionMembers(to, mids=[]):
     for point in range(parsed_len):
         mentionees = []
         for mid in mids[point*100:(point+1)*100
-            no += 1
             result += '│ %i. %s' % (no, mention)
             slen = len(result) - 100
             elen = len(result) + 1
