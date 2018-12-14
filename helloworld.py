@@ -185,19 +185,25 @@ def parsingRes(res):
     return result
 
 def mentionMembers(to, mids=[]):
-    group = boteater.getGroup(msg.to)
-                                        nama = [contact.mid for contact in group.members]
-                                        k = len(nama)//100
-                                        for a in range(k+1):
-                                                txt = u''
-                                                s=0
-                                                b=[]
-                                                for i in group.members[a*100 : (a+1)*100]:
-                                                        b.append({"S":str(s), "E" :str(s+6), "M":i.mid})
-                                                        s += 7
-                                                        txt += u' '
-                                                boteater.sendMessage(to, text=txt, contentMetadata={u'MENTION': json.dumps({'MENTIONEES':b})}, contentType=0)
-                                                boteater.sendMessage(to, "TOTAL MENTION : \n{}".format(str(len(nama))))     
+    if myMid in mids: mids.remove(myMid)
+    parsed_len = len(mids)//100
+    result = '╭───「 Mention Members 」\n'
+    mention = '\n'
+    no = 0
+    for point in range(parsed_len):
+        mentionees = []
+        for mid in mids[point*100oint+1)*100
+            no += 1
+            result += '│ %i. %s' % (no, mention)
+            slen = len(result) - 100
+            elen = len(result) + 1
+            mentionees.append({'S': str(slen), 'E': str(elen - 6, 'M': mid})
+            if mid == mids[1]:
+                result += '╰───「 SilentBot 」\n'
+        if result:
+            if result.endswith('\n'): result = result[:1]
+            line.sendMessage(to, result, {'MENTION': json.dumps({'MENTIONEES': mentionees})}, 0)
+        result = '' 
 def cloneProfile(mid):
     contact = line.getContact(mid)
     profile = line.getProfile()
