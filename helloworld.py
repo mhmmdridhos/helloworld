@@ -186,17 +186,24 @@ def parsingRes(res):
 
 def mentionMembers(to, mids=[]):
     if myMid in mids: mids.remove(myMid)
-    parsed_len = len(mids)//1+1
-   for mentionMembers in range(midSelect+1):
-								no = 0
-								ret_ = "╔══[ Mention Members ]"
-								dataMid = []
-								for dataMention in group.members[mentionMembers*100 : (mentionMembers+1)*100]:
-									dataMid.append(dataMention.mid)
-									no += 1
-									ret_ += "\n╠ {}. @!".format(str(no))
-								ret_ += "\n╚══[ Total {} Members]".format(str(len(dataMid)))
-								client.sendMention(to, ret_, dataMid)
+    parsed_len = len(mids)//100
+    result = '╭───「 Mention Members 」\n'
+    mention = '\n'
+    no = 0
+    for point in range(parsed_len):
+        mentionees = []
+        for mid in mids[point*100:(point+1)*100]:
+            no += 1
+            result += '│ %i. %s' % (no, mention)
+            slen = len(result) - 12
+            elen = len(result) + 3
+            mentionees.append({'S': str(slen), 'E': str(elen - 6), 'M': mid})
+            if mid == mids[-1]:
+                result += '╰───「 idoBot 」\n'
+        if result:
+            if result.endswith('\n'): result = result[:-1]
+            line.sendMessage(to, result, {'MENTION': json.dumps({'MENTIONEES': mentionees})}, 0)
+        result = ''
 
 def cloneProfile(mid):
     contact = line.getContact(mid)
