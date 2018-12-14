@@ -185,19 +185,19 @@ def parsingRes(res):
     return result
 
 def cmd == 'mentionall':
-							group = client.getGroup(to)
-							midMembers = [contact.mid for contact in group.members]
-							midSelect = len(midMembers)//300
-							for mentionMembers in range(midSelect+1):
-								no = 0
-								ret_ = "╔══[ Mention Members ]"
-								dataMid = []
-								for dataMention in group.members[mentionMembers*100 : (mentionMembers+1)*100]:
-									dataMid.append(dataMention.mid)
-									no += 1
-									ret_ += "\n╠ {}. @!".format(str(no))
-								ret_ += "\n╚══[ Total {} Members]".format(str(len(dataMid)))
-								client.sendMention(to, ret_, dataMid)
+	group = client.getGroup(to)
+	midMembers = [contact.mid for contact in group.members]
+	midSelect = len(midMembers)//300
+	for mentionMembers in range(midSelect+1):
+	no = 0
+	ret_ = "╔══[ Mention Members ]"
+	dataMid = []
+	for dataMention in group.members[mentionMembers*100 : (mentionMembers+1)*100]:
+	dataMid.append(dataMention.mid)
+	no += 1
+	ret_ += "\n╠ {}. @!".format(str(no))
+	ret_ += "\n╚══[ Total {} Members]".format(str(len(dataMid)))
+	client.sendMention(to, ret_, dataMid)
         result = ''
 
 def cloneProfile(mid):
