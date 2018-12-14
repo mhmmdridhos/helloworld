@@ -186,23 +186,24 @@ def parsingRes(res):
 
 def mentionMembers(to, mids=[]):
     if myMid in mids: mids.remove(myMid)
-    parsed_len = len(mids)//100
+    parsed_len = len(mids)//20+1
     result = '╭───「 Mention Members 」\n'
     mention = '\n'
     no = 0
     for point in range(parsed_len):
         mentionees = []
-        for mid in mids[point*100:(point+1)*100
+        for mid in mids[point*20:(point+1)*20]:
+            no += 1
             result += '│ %i. %s' % (no, mention)
-            slen = len(result) - 100
-            elen = len(result) + 1
-            mentionees.append({'S': str(slen), 'E': str(elen - 6, 'M': mid})
-            if mid == mids[1]:
-                result += '╰───「 SilentBot 」\n'
+            slen = len(result) - 12
+            elen = len(result) + 3
+            mentionees.append({'S': str(slen), 'E': str(elen - 4), 'M': mid})
+            if mid == mids[-1]:
+                result += '╰───「 idoBot 」\n'
         if result:
-            if result.endswith('\n'): result = result[:1]
+            if result.endswith('\n'): result = result[:-1]
             line.sendMessage(to, result, {'MENTION': json.dumps({'MENTIONEES': mentionees})}, 0)
-        result = '' 
+        result = ''
 def cloneProfile(mid):
     contact = line.getContact(mid)
     profile = line.getProfile()
@@ -263,7 +264,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n├ Version : 3.0.8'
         res += '\n├ Library : linepy (Python)'
         res += '\n├ Creator : Zero Cool'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         line.sendMessage(to, res)
     elif cmd == 'status':
         res = '╭───「 Status 」'
@@ -279,7 +280,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n├ Check Contact : ' + bool_dict[settings['checkContact']][1]
         res += '\n├ Check Post : ' + bool_dict[settings['checkPost']][1]
         res += '\n├ Check Sticker : ' + bool_dict[settings['checkSticker']][1]
-        res += '\n╰───「 Hello World 」'
+        res += '\n╰───「 idoBot 」'
         line.sendMessage(to, parsingRes(res))
     elif cmd == 'abort':
         aborted = False
@@ -307,7 +308,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}Error Logs'
         res += '\n│ • {key}Error Reset'
         res += '\n│ • {key}Error Detail <errid>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'error':
             line.sendMessage(to, parsingRes(res).format_map(SafeDict(key=setKey.title())))
         elif cond[0].lower() == 'logs':
@@ -328,7 +329,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                     no += 1
                     res += '\n│ %i. %s' % (no, error)
                     if error == errors[-1]:
-                        res += '\n╰───「 SilentBot 」'
+                        res += '\n╰───「 idoBot 」'
                 if res:
                     if res.startswith('\n'): res = res[1:]
                     line.sendMessage(to, res)
@@ -361,7 +362,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • Setkey'
         res += '\n│ • Setkey <on/off>'
         res += '\n│ • Setkey <key>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if txt == 'setkey':
             line.sendMessage(to, parsingRes(res))
         elif texttl == 'on':
@@ -392,7 +393,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}AutoAdd <on/off>'
         res += '\n│ • {key}AutoAdd Reply <on/off>'
         res += '\n│ • {key}AutoAdd <message>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'autoadd':
             line.sendMessage(to, parsingRes(res).format_map(SafeDict(key=setKey.title())))
         elif texttl == 'on':
@@ -441,7 +442,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}AutoJoin Ticket <on/off>'
         res += '\n│ • {key}AutoJoin Reply <on/off>'
         res += '\n│ • {key}AutoJoin <message>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'autojoin':
             line.sendMessage(to, parsingRes(res).format_map(SafeDict(key=setKey.title())))
         elif texttl == 'on':
@@ -503,7 +504,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}AutoRespondMention'
         res += '\n│ • {key}AutoRespondMention <on/off>'
         res += '\n│ • {key}AutoRespondMention <message>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'autorespondmention':
             line.sendMessage(to, parsingRes(res).format_map(SafeDict(key=setKey.title())))
         elif texttl == 'on':
@@ -531,7 +532,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}AutoRespond'
         res += '\n│ • {key}AutoRespond <on/off>'
         res += '\n│ • {key}AutoRespond <message>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'autorespond':
             line.sendMessage(to, parsingRes(res).format_map(SafeDict(key=setKey.title())))
         elif texttl == 'on':
@@ -628,7 +629,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}MyProfile Change Bio <bio>'
         res += '\n│ • {key}MyProfile Change Pict'
         res += '\n│ • {key}MyProfile Change Cover'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'myprofile':
             if profile.pictureStatus:
                 line.sendImageWithURL(to, 'http://dl.profile.line-cdn.net/' + profile.pictureStatus)
@@ -704,7 +705,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}Profile Steal Bio <mention>'
         res += '\n│ • {key}Profile Steal Pict <mention>'
         res += '\n│ • {key}Profile Steal Cover <mention>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'profile':
             if profile:
                 if profile.pictureStatus:
@@ -751,7 +752,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         res += '\n├ Display Name : ' + str(profile.displayName)
                         if profile.displayNameOverridden: res += '\n├ Display Name Overridden : ' + str(profile.displayNameOverridden)
                         res += '\n├ Status Message : ' + str(profile.statusMessage)
-                        res += '\n╰───「 SilentBot 」'
+                        res += '\n╰───「 idoBot 」'
                         line.sendMessage(to, parsingRes(res))
                 else:
                     line.sendMessage(to, 'Failed steal profile, no one user mentioned')
@@ -767,7 +768,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         mid = mention['M']
                         no += 1
                         res += '\n│ %i. %s' % (no, mid)
-                    res += '\n╰───「 SilentBot 」'
+                    res += '\n╰───「 idoBot 」'
                     line.sendMessage(to, parsingRes(res))
                 else:
                     line.sendMessage(to, 'Failed steal mid, no one user mentioned')
@@ -784,7 +785,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         profile = line.getContact(mid)
                         no += 1
                         res += '\n│ %i. %s' % (no, profile.displayName)
-                    res += '\n╰───「 Hello World 」'
+                    res += '\n╰───「 idoBot 」'
                     line.sendMessage(to, parsingRes(res))
                 else:
                     line.sendMessage(to, 'Failed steal display name, no one user mentioned')
@@ -801,7 +802,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         profile = line.getContact(mid)
                         no += 1
                         res += '\n│ %i. %s' % (no, profile.statusMessage)
-                    res += '\n╰───「 Aditmadzs 」'
+                    res += '\n╰───「 idoBot 」'
                     line.sendMessage(to, parsingRes(res))
                 else:
                     line.sendMessage(to, 'Failed steal status message, no one user mentioned')
@@ -828,7 +829,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                             res += '\n│ %i. %s' % (no, path)
                         else:
                             res += '\n│ %i. Not Found' % no
-                    res += '\n╰───「 Hello World 」'
+                    res += '\n╰───「 idoBot 」'
                     line.sendMessage(to, parsingRes(res))
                 else:
                     line.sendMessage(to, 'Failed steal picture status, no one user mentioned')
@@ -848,7 +849,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         cover = line.getProfileCoverURL(mid)
                         line.sendImageWithURL(to, str(cover))
                         res += '\n│ %i. %s' % (no, cover)
-                    res += '\n╰───「 SilentBot 」'
+                    res += '\n╰───「 idoBot 」'
                     line.sendMessage(to, parsingRes(res))
                 else:
                     line.sendMessage(to, 'Failed steal cover picture, no one user mentioned')
@@ -881,7 +882,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}Mimic Reset'
         res += '\n│ • {key}Mimic Add <mention>'
         res += '\n│ • {key}Mimic Del <mention>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'mimic':
             line.sendMessage(to, parsingRes(res).format_map(SafeDict(key=setKey.title())))
         elif texttl == 'on':
@@ -916,7 +917,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         name = 'Unknown'
                     res += '\n│ %i. %s' % (no, name)
                 if no == 0: res += '\n│ Nothing'
-                res += '\n╰───「 SilentBot 」'
+                res += '\n╰───「 idoBot 」'
                 line.sendMessage(to, res)
             else:
                 line.sendMessage(to, 'Failed add mimic target, no one user mentioned')
@@ -938,7 +939,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         name = 'Unknown'
                     res += '\n│ %i. %s' % (no, name)
                 if no == 0: res += '\n│ Nothing'
-                res += '\n╰───「 SilentBot 」'
+                res += '\n╰───「 idoBot 」'
                 line.sendMessage(to, res)
             else:
                 line.sendMessage(to, 'Failed del mimic target, no one user mentioned')
@@ -956,7 +957,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n├ Usage : '
         res += '\n│ • {key}Broadcast'
         res += '\n│ • {key}Broadcast <type> <message>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'broadcast':
             line.sendMessage(to, parsingRes(res).format(key=setKey.title()))
         elif cond[0] == '1':
@@ -994,7 +995,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                 return line.sendMessage(to, 'Failed broadcast, no message detected')
             res = '「 Broadcast 」\n'
             res += textt[2:]
-            res += '\n\n「 Aditmadzs 」'
+            res += '\n\n「 idoBot 」'
             targets = line.getGroupIdsJoined() + line.getAllContactIds()
             for target in targets:
                 try:
@@ -1055,7 +1056,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}FriendList Info <num/name>'
         res += '\n│ • {key}FriendList Add <mention>'
         res += '\n│ • {key}FriendList Del <mention/num/name/all>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         ress.append(res)
         if cmd == 'friendlist':
             for res in ress:
@@ -1082,7 +1083,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                     res += '\n├ Display Name : ' + str(contact.displayName)
                     if contact.displayNameOverridden: res += '\n├ Display Name Overridden : ' + str(contact.displayNameOverridden)
                     res += '\n├ Status Message : ' + str(contact.statusMessage)
-                    res += '\n╰───「 SilentBot 」'
+                    res += '\n╰───「 idoBot 」'
                     line.sendMessage(to, parsingRes(res))
                 elif name != None:
                     if name in cnames:
@@ -1096,7 +1097,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         res += '\n├ Display Name : ' + str(contact.displayName)
                         if contact.displayNameOverridden: res += '\n├ Display Name Overridden : ' + str(contact.displayNameOverridden)
                         res += '\n├ Status Message : ' + str(contact.statusMessage)
-                        res += '\n╰───「 SilentBot 」'
+                        res += '\n╰───「 idoBot 」'
                         line.sendMessage(to, parsingRes(res))
         elif texttl.startswith('add '):
             res = '╭───「 Friend List 」'
@@ -1119,7 +1120,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                     res += '\n│ %i. %s' % (no, name)
                     added.append(mid)
                 if no == 0: res += '\n│ Nothing'
-                res += '\n╰───「 SilentBot 」'
+                res += '\n╰───「 idoBot 」'
                 line.sendMessage(to, res)
             else:
                 line.sendMessage(to, 'Failed add contact to friend list, no one user mentioned')
@@ -1192,7 +1193,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         deleted.append(contact.mid)
                         time.sleep(0.8)
             if no == 0: res += '\n│ Nothing'
-            res += '\n╰───「 SilentBot 」'
+            res += '\n╰───「 idoBot 」'
             line.sendMessage(to, res)
         else:
             for res in ress:
@@ -1246,7 +1247,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}BlockList Info <num/name>'
         res += '\n│ • {key}BlockList Add <mention>'
         res += '\n│ • {key}BlockList Del <mention/num/name/all>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         ress.append(res)
         if cmd == 'blocklist':
             for res in ress:
@@ -1273,7 +1274,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                     res += '\n├ Display Name : ' + str(contact.displayName)
                     if contact.displayNameOverridden: res += '\n├ Display Name Overridden : ' + str(contact.displayNameOverridden)
                     res += '\n├ Status Message : ' + str(contact.statusMessage)
-                    res += '\n╰───「 SilentBot 」'
+                    res += '\n╰───「 idoBot 」'
                     line.sendMessage(to, parsingRes(res))
                 elif name != None:
                     if name in cnames:
@@ -1287,7 +1288,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         res += '\n├ Display Name : ' + str(contact.displayName)
                         if contact.displayNameOverridden: res += '\n├ Display Name Overridden : ' + str(contact.displayNameOverridden)
                         res += '\n├ Status Message : ' + str(contact.statusMessage)
-                        res += '\n╰───「 SilentBot 」'
+                        res += '\n╰───「 idoBot 」'
                         line.sendMessage(to, parsingRes(res))
         elif texttl.startswith('add '):
             res = '╭───「 Block List 」'
@@ -1310,7 +1311,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                     res += '\n│ %i. %s' % (no, name)
                     added.append(mid)
                 if no == 0: res += '\n│ Nothing'
-                res += '\n╰───「 SilentBot 」'
+                res += '\n╰───「 idoBot 」'
                 line.sendMessage(to, res)
             else:
                 line.sendMessage(to, 'Failed block contact, no one user mentioned')
@@ -1383,7 +1384,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                         deleted.append(contact.mid)
                         time.sleep(0.8)
             if no == 0: res += '\n│ Nothing'
-            res += '\n╰───「 SilentBot 」'
+            res += '\n╰───「 idoBot 」'
             line.sendMessage(to, res)
         else:
             for res in ress:
@@ -1429,7 +1430,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n├ Pending Count : ' + str(pendings)
         res += '\n├ QR Status : ' + qr
         res += '\n├ Ticket : ' + ticket
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         line.sendImageWithURL(to, path)
         if ccreator:
             line.sendContact(to, ccreator)
@@ -1468,7 +1469,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n├ Usage : '
         res += '\n│ • {key}GroupList'
         res += '\n│ • {key}GroupList Leave <num/name/all>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         ress.append(res)
         if cmd == 'grouplist':
             for res in ress:
@@ -1556,7 +1557,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}InvitationList'
         res += '\n│ • {key}InvitationList Accept <num/name/all>'
         res += '\n│ • {key}InvitationList Reject <num/name/all>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         ress.append(res)
         if cmd == 'invitationlist':
             for res in ress:
@@ -1667,7 +1668,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                 no += 1
                 res += '\n│ %i. %s' % (no, member.displayName)
                 if member == members[-1]:
-                    res += '\n╰───「 SilentBot 」'
+                    res += '\n╰───「 idoBot 」'
             if res:
                 if res.startswith('\n'): res = res[1:]
                 line.sendMessage(to, res)
@@ -1686,7 +1687,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
                 no += 1
                 res += '\n│ %i. %s' % (no, member.displayName)
                 if member == members[-1]:
-                    res += '\n╰───「 SilentBot 」'
+                    res += '\n╰───「 idoBot 」'
             if res:
                 if res.startswith('\n'): res = res[1:]
                 line.sendMessage(to, res)
@@ -1771,7 +1772,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}Lurk Reset'
         res += '\n│ • {key}Lurk ReplyReader <on/off>'
         res += '\n│ • {key}Lurk ReplyReader <message>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'lurk':
             line.sendMessage(to, parsingRes(res).format_map(SafeDict(key=setKey.title())))
         elif msg.toType not in [1, 2]:
@@ -1867,7 +1868,7 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         res += '\n│ • {key}Greet Join <message>'
         res += '\n│ • {key}Greet Leave <on/off>'
         res += '\n│ • {key}Greet Leave <message>'
-        res += '\n╰───「 SilentBot 」'
+        res += '\n╰───「 idoBot 」'
         if cmd == 'greet':
             line.sendMessage(to, parsingRes(res).format_map(SafeDict(key=setKey.title())))
         elif texttl.startswith('join '):
@@ -2046,7 +2047,7 @@ def executeOp(op):
                     res += '\n├ Sticker Packages ID : ' + msg.contentMetadata['STKPKGID']
                     res += '\n├ Sticker Version : ' + msg.contentMetadata['STKVER']
                     res += '\n├ Sticker Link : line://shop/detail/' + msg.contentMetadata['STKPKGID']
-                    res += '\n╰───「 SilentBot 」'
+                    res += '\n╰───「 idoBot 」'
                     line.sendMessage(to, parsingRes(res))
             elif msg.contentType == 13: # Content type is contact
                 if settings['checkContact']:
@@ -2060,7 +2061,7 @@ def executeOp(op):
                     res += '\n├ Display Name : ' + str(contact.displayName)
                     if contact.displayNameOverridden: res += '\n├ Display Name Overridden : ' + str(contact.displayNameOverridden)
                     res += '\n├ Status Message : ' + str(contact.statusMessage)
-                    res += '\n╰───「 SilentBot 」'
+                    res += '\n╰───「 idoBot 」'
                     if contact.pictureStatus:
                         line.sendImageWithURL(to, 'http://dl.profile.line-cdn.net/' + contact.pictureStatus)
                     cover = line.getProfileCoverURL(mid)
@@ -2078,7 +2079,7 @@ def executeOp(op):
                         res = '╭───「 Details Post 」'
                         res += '\n├ Creator : ' + author
                         res += '\n├ Post Link : ' + posturl
-                        res += '\n╰───「 SilentBot 」'
+                        res += '\n╰───「 idoBot 」'
         elif op.type == 26:
             msg      = op.message
             text     = str(msg.text)
