@@ -1389,18 +1389,21 @@ def executeCmd(msg, text, txt, cmd, msg_id, receiver, sender, to, setKey):
         else:
             for res in ress:
                 line.sendMessage(to, parsingRes(res).format_map(SafeDict(key=setKey.title())))
-    elif cmd == 'mentionall':
-        members = []
-        if msg.toType == 1:
-            room = line.getCompactRoom(to)
-            members = [mem.mid for mem in room.contacts]
-        elif msg.toType == 2:
-            group = line.getCompactGroup(to)
-            members = [mem.mid for mem in group.members]
-        else:
-            return line.sendMessage(to, 'Failed mentionall members, use this command only on room or group chat')
-        if members:
-            mentionMembers(to, members)
+elif cmd == 'mention':
+                            group = client.getGroup(to)
+                            midMembers = [contact.mid for contact in group.members]
+                            midSelect = len(midMembers)//20
+                            for mentionMembers in range(midSelect+1):
+                                no = 0
+                                ret_ = "╔══[ Mention Members ]"
+                                dataMid = []
+                                for dataMention in group.members[mentionMembers*20 : (mentionMembers+1)*20]:
+                                    dataMid.append(dataMention.mid)
+                                    no += 1
+                                    ret_ += "\n╠{}. @!\n\n\n".format(str(no))
+                                ret_ += "\n╚══[ Total {} Members]".format(str(len(dataMid)))
+                                sendMentionFer(to, ret_, dataMid)
+
     elif cmd == 'groupinfo':
         if msg.toType != 2: return line.sendMessage(to, 'Failed display group info, use this command only on group chat')
         group = line.getCompactGroup(to)
